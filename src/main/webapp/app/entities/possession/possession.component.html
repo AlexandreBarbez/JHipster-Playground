@@ -1,0 +1,64 @@
+<div>
+    <h2 id="page-heading">
+        <span>Possessions</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-possession" [routerLink]="['/possession/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create new Possession
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="possessions">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Name</span></th>
+            <th><span>Price</span></th>
+            <th><span>Description</span></th>
+            <th><span>Category</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let possession of possessions ;trackBy: trackId">
+                <td><a [routerLink]="['/possession', possession.id, 'view' ]">{{possession.id}}</a></td>
+                <td>{{possession.name}}</td>
+                <td>{{possession.price}}</td>
+                <td>{{possession.description}}</td>
+                <td>
+                    <div *ngIf="possession.categoryId">
+                        <a [routerLink]="['../category', possession.categoryId , 'view' ]" *ngFor="let categoryOption of categories; trackBy: trackCategoryById">{{categoryOption.name}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/possession', possession.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/possession', possession.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', 'possession', { outlets: { popup: possession.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
